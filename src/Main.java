@@ -4,11 +4,20 @@ public class Main {
     public static void main(String[] args) {
 //        A program to convert each number inputted to a word
 //        Take user input
-        Scanner reader = new Scanner(System.in);
+        while(true){
+            Scanner reader = new Scanner(System.in);
 
-        System.out.println("Welcome, what number would you like to convert? ");
-        int number = reader.nextInt();
-        System.out.println(convertToWords(number));
+            System.out.println("Welcome, what number would you like to convert? ");
+            int number;
+//              validate user's input
+            if(reader.hasNextInt()){
+                number = reader.nextInt();
+                System.out.println(convertToWords(number));
+                break;
+            } else{
+                System.out.println("Invalid input, enter a number. ");
+            }
+        }
     }
 
 // method to convert each group of threes to words and add to the next group of threes of the number input
@@ -37,6 +46,7 @@ public class Main {
 
 //        res => result
         String res = "";
+//        Group determines how many iterations the entire number has to go through
         int group = 0;
 
         // Process number in group of 1000s
@@ -46,13 +56,13 @@ public class Main {
                 int value = n % 1000;
                 String temp = "";
 
-                // Handle 3 digit number
+                // Handle 3 digit number[Hundredth place value]
                 if (value >= 100) {
                     temp = units[value / 100] + " Hundred ";
                     value %= 100;
                 }
 
-                // Handle 2 digit number
+                // Handle 2 digit number [Tenth place value]
                 if (value >= 20) {
                     temp += tens[value / 10] + " ";
                     value %= 10;
