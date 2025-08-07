@@ -22,15 +22,29 @@ public class Main {
     }
 
 // method to convert each group of threes to words and add to the next group of threes of the number input
-    public static String convertToWords(long n){
-//        handle for keyword "0"
-        if(n == 0){
-            return "Zero";
-        }
+private static HashMap<Integer, String> getMultiplier() {
+    HashMap<Integer,String> multiplier = new HashMap<>();
+    multiplier.put(0," ");
+    multiplier.put(1,"Thousand");
+    multiplier.put(2,"Million");
+    multiplier.put(3,"Billion");
+    return multiplier;
+}
 
-//        replacing the array with a hashmap
+    private static HashMap<Integer, String> getTens() {
+        HashMap<Integer,String> tens = new HashMap<>();
+        tens.put(2, "Twenty");
+        tens.put(3, "Thirty");
+        tens.put(4, "Forty");
+        tens.put(5, "Fifty");
+        tens.put(6, "Sixty");
+        tens.put(7, "Seventy");
+        tens.put(8, "Eighty");
+        tens.put(9, "Ninety");
+        return tens;
+    }
 
-
+    private static HashMap<Integer, String> getUnits() {
         HashMap<Integer,String> units = new HashMap<>();
         units.put(1, "One");
         units.put(2, "Two");
@@ -51,22 +65,20 @@ public class Main {
         units.put(17, "Seventeen");
         units.put(18, "Eighteen");
         units.put(19, "Nineteen");
+        return units;
+    }
 
-        HashMap<Integer,String> tens = new HashMap<>();
-        tens.put(2, "Twenty");
-        tens.put(3, "Thirty");
-        tens.put(4, "Forty");
-        tens.put(5, "Fifty");
-        tens.put(6, "Sixty");
-        tens.put(7, "Seventy");
-        tens.put(8, "Eighty");
-        tens.put(9, "Ninety");
+    public static String convertToWords(long n){
+//        handle for keyword "0"
+        if(n == 0){
+            return "Zero";
+        }
 
-        HashMap<Integer,String> multiplier = new HashMap<>();
-        multiplier.put(0," ");
-        multiplier.put(1,"Thousand");
-        multiplier.put(2,"Million");
-        multiplier.put(3,"Billion");
+        HashMap<Integer, String> units = getUnits();
+
+        HashMap<Integer, String> tens = getTens();
+
+        HashMap<Integer, String> multiplier = getMultiplier();
 
 //        res => result
         String res = "";
