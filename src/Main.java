@@ -16,9 +16,9 @@ public class Main {
 
                 number = reader.nextLine();
                 if(number.contains(".")){
-                    String[] pieces = number.split(".");
+                    String[] pieces = number.split("\\.");
                     long whole = Long.parseLong(pieces[0]);
-                    long decimal = Long.parseLong(pieces[1]);
+                    String decimal = pieces[1];
 
                     System.out.println(convertToWords(whole) + " point " + convertToWordsDec(decimal));
 
@@ -110,6 +110,11 @@ public class Main {
                     value %= 100;
                 }
 
+//                includes "and" for better user experience
+                if(temp.contains(" Hundred ") && value != 0){
+                    temp = temp + "and ";
+                }
+
                 if (value >= 20) {
                     Integer key = Math.toIntExact(value / 10);
                     String keyValue = tens.get(key);
@@ -128,69 +133,44 @@ public class Main {
                 String keyValue = multiplier.get(key);
                 temp += keyValue + " ";
 
+
+
                 res = temp + res;
             }
             n /= 1000;
+
+
+
             group++;
+
         }
 
         return res.trim();
     }
 
-    public static String convertToWordsDec(long n){
+    public static String convertToWordsDec(String n){
 //        handle for keyword zero, zeros are typically ignored in decimal parts of a number
-//        Tenths place (1/10)
-        HashMap<Integer, String> tenths = new HashMap<>();
-        tenths.put(1, "One tenth");
-        tenths.put(2, "Two tenths");
-        tenths.put(3, "Three tenths");
-        tenths.put(4, "Four tenths");
-        tenths.put(5, "Five tenths");
-        tenths.put(6, "Six tenths");
-        tenths.put(7, "Seven tenths");
-        tenths.put(8, "Eight tenths");
-        tenths.put(9, "Nine tenths");
 
-//         Hundredths place (1/100)
-        HashMap<Integer, String> hundredths = new HashMap<>();
-        hundredths.put(1, "One hundredth");
-        hundredths.put(2, "Two hundredths");
-        hundredths.put(3, "Three hundredths");
-        hundredths.put(4, "Four hundredths");
-        hundredths.put(5, "Five hundredths");
-        hundredths.put(6, "Six hundredths");
-        hundredths.put(7, "Seven hundredths");
-        hundredths.put(8, "Eight hundredths");
-        hundredths.put(9, "Nine hundredths");
+        HashMap<Character, String> digitToWord = new HashMap<>();
+        digitToWord.put('0', "Zero");
+        digitToWord.put('1', "One");
+        digitToWord.put('2', "Two");
+        digitToWord.put('3', "Three");
+        digitToWord.put('4', "Four");
+        digitToWord.put('5', "Five");
+        digitToWord.put('6', "Six");
+        digitToWord.put('7', "Seven");
+        digitToWord.put('8', "Eight");
+        digitToWord.put('9', "Nine");
 
-//         Thousandths place (1/1000)
-        HashMap<Integer, String> thousandths = new HashMap<>();
-        thousandths.put(1, "One thousandth");
-        thousandths.put(2, "Two thousandths");
-        thousandths.put(3, "Three thousandths");
-        thousandths.put(4, "Four thousandths");
-        thousandths.put(5, "Five thousandths");
-        thousandths.put(6, "Six thousandths");
-        thousandths.put(7, "Seven thousandths");
-        thousandths.put(8, "Eight thousandths");
-        thousandths.put(9, "Nine thousandths");
+        char[] decNumbers = n.toCharArray();
+        String decimal ="";
 
-
-        String res = "";
-        int group = 0;
-
-        while(n > 0) {
-            if(n % 1000 != 0){
-                long value = n % 1000;
-                String temp = "";
-
-                if(value >= 100){
-                    Integer key = Math.toIntExact(value/100);
-                    String keyValue = tenths.get(key);
-                    temp = keyValue + " H"
-                }
+        for(int i = 0; i < decNumbers.length; i++){
+            if(digitToWord.containsKey(decNumbers[i])){
+                decimal +=  digitToWord.get(decNumbers[i]) + " ";
             }
         }
-
+        return decimal;
     }
 }
