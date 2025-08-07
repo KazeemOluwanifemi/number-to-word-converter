@@ -27,22 +27,46 @@ public class Main {
         if(n == 0){
             return "Zero";
         }
-//        handle place value for each group of three
-        String[] units = {
-                " ","One","Two", "Three",
-                "Four",    "Five",      "Six",      "Seven",
-                "Eight",   "Nine",      "Ten",      "Eleven",
-                "Twelve",  "Thirteen",  "Fourteen", "Fifteen",
-                "Sixteen", "Seventeen", "Eighteen", "Nineteen"
-        };
 
-        String[] tens = {
-                "",     "",     "Twenty",  "Thirty", "Forty",
-                "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"
-        };
+//        replacing the array with a hashmap
 
-        String[] multiplier =
-                {"", "Thousand", "Million", "Billion"};
+
+        HashMap<Integer,String> units = new HashMap<>();
+        units.put(1, "One");
+        units.put(2, "Two");
+        units.put(3, "Three");
+        units.put(4, "Four");
+        units.put(5, "Five");
+        units.put(6, "Six");
+        units.put(7, "Seven");
+        units.put(8, "Eight");
+        units.put(9, "Nine");
+        units.put(10, "Ten");
+        units.put(11, "Eleven");
+        units.put(12, "Twelve");
+        units.put(13, "Thirteen");
+        units.put(14, "Fourteen");
+        units.put(15, "Fifteen");
+        units.put(16, "Sixteen");
+        units.put(17, "Seventeen");
+        units.put(18, "Eighteen");
+        units.put(19, "Nineteen");
+
+        HashMap<Integer,String> tens = new HashMap<>();
+        tens.put(2, "Twenty");
+        tens.put(3, "Thirty");
+        tens.put(4, "Forty");
+        tens.put(5, "Fifty");
+        tens.put(6, "Sixty");
+        tens.put(7, "Seventy");
+        tens.put(8, "Eighty");
+        tens.put(9, "Ninety");
+
+        HashMap<Integer,String> multiplier = new HashMap<>();
+        multiplier.put(0," ");
+        multiplier.put(1,"Thousand");
+        multiplier.put(2,"Million");
+        multiplier.put(3,"Billion");
 
 //        res => result
         String res = "";
@@ -56,22 +80,31 @@ public class Main {
                 long value = n % 1000;
                 String temp = "";
 
+
                 if (value >= 100) {
-                    temp = units[Math.toIntExact(value / 100)] + " Hundred ";
+                    Integer key = Math.toIntExact(value / 100);
+                    String keyValue = units.get(key);
+                    temp = keyValue + " Hundred ";
                     value %= 100;
                 }
 
                 if (value >= 20) {
-                    temp += tens[Math.toIntExact(value / 10)] + " ";
+                    Integer key = Math.toIntExact(value / 10);
+                    String keyValue = tens.get(key);
+                    temp += keyValue + " ";
                     value %= 10;
                 }
 
 
                 if (value > 0) {
-                    temp += units[Math.toIntExact(value)] + " ";
+                    Integer key = Math.toIntExact(value);
+                    String keyValue = units.get(key);
+                    temp += keyValue + " ";
                 }
 
-                temp += multiplier[group] + " ";
+                Integer key = group;
+                String keyValue = multiplier.get(key);
+                temp += keyValue + " ";
 
                 res = temp + res;
             }
