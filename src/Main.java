@@ -3,15 +3,16 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
 //        A program to convert each number inputted to a word
+
 //        Take user and validate user input
         while(true){
             Scanner reader = new Scanner(System.in);
 
             System.out.println("Welcome, what number would you like to convert? ");
-            int number;
+            long number;
 
-            if(reader.hasNextInt()){
-                number = reader.nextInt();
+            if(reader.hasNextLong()){
+                number = reader.nextLong();
                 System.out.println(convertToWords(number));
                 break;
             } else{
@@ -21,7 +22,7 @@ public class Main {
     }
 
 // method to convert each group of threes to words and add to the next group of threes of the number input
-    public static String convertToWords(int n){
+    public static String convertToWords(long n){
 //        handle for keyword "0"
         if(n == 0){
             return "Zero";
@@ -52,22 +53,22 @@ public class Main {
         while (n > 0) {
             if (n % 1000 != 0) {
 
-                int value = n % 1000;
+                long value = n % 1000;
                 String temp = "";
 
                 if (value >= 100) {
-                    temp = units[value / 100] + " Hundred ";
+                    temp = units[Math.toIntExact(value / 100)] + " Hundred ";
                     value %= 100;
                 }
 
                 if (value >= 20) {
-                    temp += tens[value / 10] + " ";
+                    temp += tens[Math.toIntExact(value / 10)] + " ";
                     value %= 10;
                 }
 
 
                 if (value > 0) {
-                    temp += units[value] + " ";
+                    temp += units[Math.toIntExact(value)] + " ";
                 }
 
                 temp += multiplier[group] + " ";
