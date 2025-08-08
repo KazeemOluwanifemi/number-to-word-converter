@@ -8,22 +8,29 @@ public class Main {
         while(true){
             Scanner reader = new Scanner(System.in);
 
-            System.out.println("Welcome, what number would you like to convert? ");
+            System.out.println("Welcome to the number to words converter");
+            System.out.println("What number would you like to convert?");
+            System.out.print("-> ");
 
             if(reader.hasNextLine()){
                 String number = "";
                 long numbers = 0;
 
                 number = reader.nextLine();
-                if(number.contains(".")){
-                    String[] pieces = number.split("\\.");
+                System.out.println(checkForNumbers(number));
+
+                String convertedValue = String.valueOf(checkForNumbers(number));
+
+
+                if(convertedValue.contains(".")){
+                    String[] pieces = convertedValue.split("\\.");
                     long whole = Long.parseLong(pieces[0]);
                     String decimal = pieces[1];
 
                     System.out.println(convertToWords(whole) + " point " + convertToWordsDec(decimal));
 
                 } else {
-                    numbers = Long.parseLong(number);
+                    numbers = Long.parseLong(convertedValue);
                     System.out.println(convertToWords(numbers));
                 }
                 break;
@@ -172,5 +179,27 @@ public class Main {
             }
         }
         return decimal;
+    }
+
+    public static long checkForNumbers(String input){
+        boolean converted = true;
+        long convertedValue = 0;
+        String[] pieces = input.split(" ");
+        for (int i = 0; i < pieces.length; i++) {
+            if(pieces[i].contains(".")){
+                continue;
+            } else {
+                try {
+                    Long.parseLong(pieces[i]);
+                    converted = true;
+                } catch (NumberFormatException e) {
+                    converted = false;
+                }
+            }
+            if(converted){
+                convertedValue = Long.parseLong(pieces[i]);
+            }
+        }
+        return convertedValue;
     }
 }
